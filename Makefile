@@ -1,5 +1,5 @@
 genhl:
-	haxe -cp src  -lib webidl --macro "yojimbo.Generator.generateCpp()"
+	haxe -cp generator  -lib webidl --macro "houdiniengine.Generator.generateCpp()"
 	
 genjs:
-	haxe -cp src -lib webidl --macro "yojimbo.Generator.generateJs()"
+	haxe -cp generator -lib webidl --macro "houdiniengine.Generator.generateJs()"

@@ -90,7 +90,8 @@ specific cmake command example on linux:
 * Note: Specify the hashlink directories on your system.  On Mac, brew defaults /usr/local (lib/include).
 ```sh
     cmake ..  -GNinja 
-    -Dhoudiniengine_SRC_DIR="ext/houdiniengine" 
+    -DHOUDINIENGINE_SRC_DIR="ext/houdiniengine" 
+    -DHOUDINIENGINE_INC_DIR="ext/houdiniengine" 
     -DHL_LIB_DIR="/usr/local/lib" 
     -DHL_INCLUDE_DIR="/usr/local/include" 
     -DHDLL_DESTINATION="/usr/local/lib"
