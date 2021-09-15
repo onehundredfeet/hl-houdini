@@ -11,28 +11,20 @@ class Generator {
 #pragma warning(disable:4316)
 #endif
 
+#include <HAPI/HAPI.h>
+#include <HAPI/HAPI_API.h>
+#include <HAPI/HAPI_Common.h>
+#include <HAPI/HAPI_Helpers.h>
 ";
 
 
-	static var options = { idlFile : "src/houdiniengine.idl", nativeLib : "houdiniengine", outputDir : "src", includeCode : INCLUDE, autoGC : true };
+	static var options = { idlFile : "generator/houdiniengine.idl", nativeLib : "houdiniengine", outputDir : "src", includeCode : INCLUDE, autoGC : true };
 
 	public static function generateCpp() {
 		webidl.Generate.generateCpp(options);
 	}
 
 
-//Not currently supported, but likely very easy to get going
-	public static function generateJs() {
-		// ammo.js params
-		var debug = false;
-		var defines = debug ? [] : ["NO_EXIT_RUNTIME=1", "NO_FILESYSTEM=1", "AGGRESSIVE_VARIABLE_ELIMINATION=1", "ELIMINATE_DUPLICATE_FUNCTIONS=1", "NO_DYNAMIC_EXECUTION=1"];
-		var params = ["-O"+(debug?0:3), "--llvm-lto", "1", "-I", "../../include/houdiniengine/src"];
-		for( d in defines ) {
-			params.push("-s");
-			params.push(d);
-		}
-		webidl.Generate.generateJs(options, getFiles(), params);
-	}
 
 }
 #end

@@ -1,3 +1,4 @@
 ext/Houdini.framework
 ext/houdiniengine
 build
+src/houdiniengine.cpp
