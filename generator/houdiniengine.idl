@@ -26,10 +26,13 @@ enum HAPI_Result {
 
 
 interface HAPI_ThriftServerOptions {
+	void HAPI_ThriftServerOptions();
+
     attribute bool autoClose;
     attribute float timeoutMs;
 
-    [CObject, Call="HAPI_StartThriftNamedPipeServer"] HAPI_Result StartNamedPipeServer( ByteString name, [Ref] int pid);
+    [CObject, Call="HAPI_StartThriftNamedPipeServer",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastError()"] int StartNamedPipeServer( [Const] String name,  int[] pid);
+    [CObject, Call="HAPI_StartThriftSocketServer",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastError()"] int StartSocketServer( int port,  int[] pid);
 
 };
 

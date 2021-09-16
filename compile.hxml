@@ -1,0 +1,3 @@
+-lib webidl
+-hl test.hl
+--main Test

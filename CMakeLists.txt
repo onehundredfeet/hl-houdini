@@ -6,6 +6,7 @@ add_library(houdiniengine.hdll SHARED
 #${HOUDINIENGINE_SRC_DIR}/INPUT FILES GO HERE.cpp
 
 src/houdiniengine.cpp
+src/hlhapiutil.cpp
 )
 
 set_target_properties(houdiniengine.hdll
