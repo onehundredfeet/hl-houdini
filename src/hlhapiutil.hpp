@@ -5,9 +5,9 @@
 #include <HAPI/HAPI.h>
 
 namespace Houdini {
-vdynamic *GetLastCallError(HAPI_Session* session = nullptr);
-vdynamic *GetLastCookError(HAPI_Session* session = nullptr);
-vdynamic *GetLastError(HAPI_Session* session, HAPI_StatusType statusType);
+vdynamic *GetLastCallError(HAPI_Result code, HAPI_Session* session = nullptr);
+vdynamic *GetLastCookError(HAPI_Result code,HAPI_Session* session = nullptr);
+vdynamic *GetLastError(HAPI_Result code,HAPI_Session* session, HAPI_StatusType statusType);
 
 }
 

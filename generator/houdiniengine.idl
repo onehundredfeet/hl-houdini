@@ -23,16 +23,52 @@ enum HAPI_Result {
 "HAPI_RESULT_USER_INTERRUPTED", 	
 "HAPI_RESULT_INVALID_SESSION" 
 };
+ enum HAPI_PackedPrimInstancingMode
+{
+"HAPI_PACKEDPRIM_INSTANCING_MODE_INVALID",
+"HAPI_PACKEDPRIM_INSTANCING_MODE_DISABLED",
+"HAPI_PACKEDPRIM_INSTANCING_MODE_HIERARCHY",
+"HAPI_PACKEDPRIM_INSTANCING_MODE_FLAT",
+"HAPI_PACKEDPRIM_INSTANCING_MODE_MAX"
+};
 
-
-interface HAPI_ThriftServerOptions {
-	void HAPI_ThriftServerOptions();
+[Internal="HAPI_ThriftServerOptions"]
+interface ServerOptions {
+	void ServerOptions();
 
     attribute bool autoClose;
     attribute float timeoutMs;
 
-    [CObject, Call="HAPI_StartThriftNamedPipeServer",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError()"] int StartNamedPipeServer( [Const] String name,  int[] pid);
-    [CObject, Call="HAPI_StartThriftSocketServer",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError()"] int StartSocketServer( int port,  int[] pid);
+    [CObject, Internal="HAPI_StartThriftNamedPipeServer",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int startNamedPipeServer( [Const] String name,  int[] pid);
+    [CObject, Internal="HAPI_StartThriftSocketServer",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int startSocketServer( int port,  int[] pid);
+};
+	
+
+[Internal="HAPI_CookOptions"]
+interface CookOptions {
+	void CookOptions();
+	attribute bool splitGeosByGroup;
+	attribute bool splitGeosByAttribute;
+	attribute bool splitAttrSH;
+	attribute int maxVerticesPerPrimitive;
+	attribute bool  refineCurveToLinear;
+	attribute float curveRefineLOD;
+	attribute bool clearErrorsAndWarnings;
+	attribute bool cookTemplatedGeos;
+	attribute bool splitPointsByVertexAttributes;
+	attribute bool handleBoxPartTypes;
+    attribute bool handleSpherePartTypes;
+	attribute bool checkPartChanges;
+	attribute bool cacheMeshTopology;
+
+//	attribute int packedPrimInstancingMode;
+};
+[Internal="HAPI_Session"]
+interface Session {
+	void Session();
+	attribute int id;
+
+    [CObject, Internal="HAPI_CreateThriftSocketSession",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int connectBySocket( [Const] String hostname,  int port);
 
 };
 
