@@ -69,6 +69,19 @@ interface Session {
 	attribute int id;
 
     [CObject, Internal="HAPI_CreateThriftSocketSession",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int connectBySocket( [Const] String hostname,  int port);
+    [CObject, Internal=" HAPI_Initialize",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int initialize( CookOptions cookOptions , bool cookThreads, int cookingStackSize, String environmentFiles, String otlsearch, String dsosearch, String imagedsosearch, String audiodsosearch);
+    [CObject, Internal="HAPI_CloseSession",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int close();
+    [CObject, Internal="HAPI_IsSessionValid",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int isValid();
+    [CObject, Internal="HAPI_IsInitialized",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int isInitialized();
+    [CObject, Internal="HAPI_Cleanup",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int cleanup();
+
+	// Assets
+    [CObject, Internal="HAPI_LoadAssetLibraryFromFile",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int loadAssetLibraryFromFile(String path, bool allowOverwrite, [Return] int libraryID);
+
+	//HIP File
+    [CObject, Internal="HAPI_LoadHIPFile",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int loadHIP(String path, bool cook);
+	
+
 
 };
 

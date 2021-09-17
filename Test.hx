@@ -23,6 +23,23 @@ class Test {
         var s = new Session();
         trace("Session");
         s.connectBySocket("localhost", 6010);
+
+        trace("Cook options");
+        var co = new CookOptions();
+
+        trace("Initializing");
+
+        s.initialize(co, false, -1, null,null, null, null, null );
+
+        //trace("load library");
+        //var libId = s.loadAssetLibraryFromFile( "Path", true);
+
+        trace("load HIP file");
+        s.loadHIP( "assets/test.hiplc", true );
+
+        trace("Cleanup");
+        s.cleanup();
+
         trace("End");
     }
 
