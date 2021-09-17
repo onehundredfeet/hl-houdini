@@ -63,10 +63,35 @@ interface CookOptions {
 
 //	attribute int packedPrimInstancingMode;
 };
+
+[Internal="HAPI_AssetInfo"]
+interface AssetInfo {
+	void AssetInfo();
+	attribute int nodeId;
+	attribute int objectNodeId;
+	attribute bool hasEverCooked;
+
+	attribute int nameSH;
+	attribute int labelSH;
+	attribute int filePathSH;
+	attribute int versionSH;
+	attribute int fullOpNameSH;
+	attribute int helpTextSH;
+	attribute int helpURLSH;
+
+	attribute int objectCount;
+	attribute int handleCount;
+	attribute int transformInputCount;
+	attribute int geoInputCount;
+	attribute int geoOutputCount; 
+	attribute bool haveObjectsChanged; 
+	attribute bool haveMaterialsChanged; 
+};
+
 [Internal="HAPI_Session"]
 interface Session {
 	void Session();
-	attribute int id;
+//	attribute int id;
 
     [CObject, Internal="HAPI_CreateThriftSocketSession",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int connectBySocket( [Const] String hostname,  int port);
     [CObject, Internal=" HAPI_Initialize",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int initialize( CookOptions cookOptions , bool cookThreads, int cookingStackSize, String environmentFiles, String otlsearch, String dsosearch, String imagedsosearch, String audiodsosearch);
@@ -81,6 +106,14 @@ interface Session {
 	//HIP File
     [CObject, Internal="HAPI_LoadHIPFile",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int loadHIP(String path, bool cook);
 	
+	// Nodes
+    [CObject, Internal="HAPI_CreateNode",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int createNode(int parent, String name, String label, bool cook, [Return] int nodeID);
+    [CObject, Internal="HAPI_CookNode",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int cookNode(int node, CookOptions options);
+
+	// Strings
+    [CObject, Internal="Houdini::getString"] String getString(int strID);
+    [CObject, Internal="Houdini::setString"] int createString(String v);
+
 
 
 };
