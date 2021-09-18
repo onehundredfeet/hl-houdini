@@ -32,6 +32,43 @@ enum HAPI_Result {
 "HAPI_PACKEDPRIM_INSTANCING_MODE_MAX"
 };
 
+enum HAPI_NodeType
+{
+    "HAPI_NODETYPE_ANY",
+    "HAPI_NODETYPE_NONE",
+    "HAPI_NODETYPE_OBJ",
+    "HAPI_NODETYPE_SOP",
+    "HAPI_NODETYPE_CHOP",
+    "HAPI_NODETYPE_ROP",
+    "HAPI_NODETYPE_SHOP",
+    "HAPI_NODETYPE_COP",
+    "HAPI_NODETYPE_VOP",
+    "HAPI_NODETYPE_DOP",
+    "HAPI_NODETYPE_TOP"
+};
+
+
+ enum HAPI_NodeFlags
+{
+	"HAPI_NODEFLAGS_ANY",
+	"HAPI_NODEFLAGS_NONE",
+	"HAPI_NODEFLAGS_DISPLAY",
+	"HAPI_NODEFLAGS_RENDER",
+	"HAPI_NODEFLAGS_TEMPLATED",
+	"HAPI_NODEFLAGS_LOCKED",
+	"HAPI_NODEFLAGS_EDITABLE",
+	"HAPI_NODEFLAGS_BYPASS",
+	"HAPI_NODEFLAGS_NETWORK",
+	"HAPI_NODEFLAGS_OBJ_GEOMETRY",
+	"HAPI_NODEFLAGS_OBJ_CAMERA",
+	"HAPI_NODEFLAGS_OBJ_LIGHT",
+	"HAPI_NODEFLAGS_OBJ_SUBNET",
+	"HAPI_NODEFLAGS_SOP_CURVE",	
+	"HAPI_NODEFLAGS_SOP_GUIDE",	
+	"HAPI_NODEFLAGS_TOP_NONSCHEDULER",	
+	"HAPI_NODEFLAGS_NON_BYPASS"
+};
+
 [Internal="HAPI_ThriftServerOptions"]
 interface ServerOptions {
 	void ServerOptions();
@@ -39,8 +76,8 @@ interface ServerOptions {
     attribute bool autoClose;
     attribute float timeoutMs;
 
-    [CObject, Internal="HAPI_StartThriftNamedPipeServer",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int startNamedPipeServer( [Const] String name,  int[] pid);
-    [CObject, Internal="HAPI_StartThriftSocketServer",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int startSocketServer( int port,  int[] pid);
+    [CObject, Internal="HAPI_StartThriftNamedPipeServer",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int startNamedPipeServer( [Const] String name,  [Return] int pid);
+    [CObject, Internal="HAPI_StartThriftSocketServer",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int startSocketServer( int port,  [Return]int pid);
 };
 	
 
@@ -102,6 +139,7 @@ interface Session {
 
 	// Assets
     [CObject, Internal="HAPI_LoadAssetLibraryFromFile",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int loadAssetLibraryFromFile(String path, bool allowOverwrite, [Return] int libraryID);
+ 	[CObject, Internal="HAPI_GetAssetInfo",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int getAssetInfo(int nodeID, AssetInfo outInfo);
 
 	//HIP File
     [CObject, Internal="HAPI_LoadHIPFile",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int loadHIP(String path, bool cook);
@@ -109,6 +147,10 @@ interface Session {
 	// Nodes
     [CObject, Internal="HAPI_CreateNode",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int createNode(int parent, String name, String label, bool cook, [Return] int nodeID);
     [CObject, Internal="HAPI_CookNode",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int cookNode(int node, CookOptions options);
+    [CObject, Internal="HAPI_GetManagerNodeId",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int getManagerNode(HAPI_NodeType nodeType, [Return] int nodeID);
+    [CObject, Internal="HAPI_ComposeChildNodeList",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int composeChildNodeList(int parent_node_id, int nodeType, int flags, bool recursive, [Return] int count);
+    [CObject, Internal="Houdini::getChildNodeList"] int[] getChildNodeList(int parent_node_id, int nodeType, int flags, bool recursive );
+
 
 	// Strings
     [CObject, Internal="Houdini::getString"] String getString(int strID);

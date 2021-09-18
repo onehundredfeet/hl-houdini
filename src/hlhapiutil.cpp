@@ -71,4 +71,16 @@ int setString( HAPI_Session* session, char *str) {
 
     return handle;
 }
+
+varray *getChildNodeList(HAPI_Session* session, int nodeID, int typeFlags, int flagFlags, bool recursive) {
+    int count;
+    auto reta = HAPI_ComposeChildNodeList( session, nodeID,  typeFlags, flagFlags, recursive, &count );
+
+    auto a = hl_alloc_array(&hlt_i32, count);
+
+    auto p = hl_aptr(a, int);
+
+    auto retb = HAPI_GetComposedChildNodeList(session, nodeID, p, count);
+    return a;
+}
 }

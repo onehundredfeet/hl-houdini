@@ -10,7 +10,7 @@ vdynamic *GetLastCookError(HAPI_Result code,HAPI_Session* session = nullptr);
 vdynamic *GetLastError(HAPI_Result code,HAPI_Session* session, HAPI_StatusType statusType);
 vdynamic *getString( HAPI_Session* session, HAPI_StringHandle str);
 int setString( HAPI_Session* session, char *str);
-
+varray *getChildNodeList(HAPI_Session* session, int nodeID, int typeFlags, int flagFlags, bool recursive);
 
 }
 
