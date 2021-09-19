@@ -125,6 +125,70 @@ interface AssetInfo {
 	attribute bool haveMaterialsChanged; 
 };
 
+[Internal="HAPI_NodeInfo"]
+interface NodeInfo {
+	void NodeInfo();
+
+	attribute int id;
+    attribute int parentId;
+    attribute int nameSH;
+	
+//    attribute HAPI_NodeType type;
+
+    /// Always true unless the asset's definition has changed due to loading
+    /// a duplicate asset definition and from another OTL asset library
+    /// file OR deleting the OTL asset library file used by this node's asset.
+    attribute bool isValid;
+
+    /// Total number of cooks of this node.
+    attribute int totalCookCount;
+
+    /// Use this unique id to grab the OP_Node pointer for this node.
+    /// If you're linking against the C++ HDK, include the OP_Node.h header
+    /// and call OP_Node::lookupNode().
+    attribute int uniqueHoudiniNodeId;
+
+    /// This is the internal node path in the Houdini scene graph. This path
+    /// is meant to be abstracted away for most client purposes but for
+    /// advanced uses it can come in handy.
+    attribute int internalNodePathSH;
+
+    /// Total number of parameters this asset has exposed. Includes hidden
+    /// parameters.
+    /// See @ref HAPI_Parameters.
+    attribute int parmCount;
+
+    /// Number of values. A single parameter may have more than one value so
+    /// this number is more than or equal to ::HAPI_NodeInfo::parmCount.
+    /// @{
+    attribute int parmIntValueCount;
+    attribute int parmFloatValueCount;
+    attribute int parmStringValueCount;
+    /// @}
+
+    /// The total number of choices among all the combo box parameters.
+    /// See @ref HAPI_Parameters_ChoiceLists.
+    attribute int parmChoiceCount;
+
+    /// The number of child nodes. This is 0 for all nodes that are not
+    /// node networks.
+    attribute int childNodeCount;
+
+    /// The number of inputs this specific node has.
+    attribute int inputCount;
+
+    /// The number of outputs this specific node has.
+    attribute int outputCount;
+
+    /// Nodes created via scripts or via ::HAPI_CreateNode() will be have
+    /// this set to true. Only such nodes can be deleted using
+    /// ::HAPI_DeleteNode().
+    attribute bool createdPostAssetLoad;
+
+    /// Indicates if this node will change over time
+    attribute bool isTimeDependent;
+};
+
 [Internal="HAPI_Session"]
 interface Session {
 	void Session();
@@ -150,6 +214,9 @@ interface Session {
     [CObject, Internal="HAPI_GetManagerNodeId",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int getManagerNode(HAPI_NodeType nodeType, [Return] int nodeID);
     [CObject, Internal="HAPI_ComposeChildNodeList",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int composeChildNodeList(int parent_node_id, int nodeType, int flags, bool recursive, [Return] int count);
     [CObject, Internal="Houdini::getChildNodeList"] int[] getChildNodeList(int parent_node_id, int nodeType, int flags, bool recursive );
+    [CObject, Internal="HAPI_GetNodeInfo",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int getNodeInfo(int node, NodeInfo info);
+
+
 
 
 	// Strings
