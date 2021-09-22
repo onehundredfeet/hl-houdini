@@ -3,3 +3,6 @@ ext/houdiniengine
 Houdini.framework
 build
 src/houdiniengine.cpp
+.DS_Store
+bin/test.hl
+.vscode/settings.json
