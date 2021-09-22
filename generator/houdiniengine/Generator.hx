@@ -16,6 +16,7 @@ class Generator {
 #include <HAPI/HAPI_Common.h>
 #include <HAPI/HAPI_Helpers.h>
 #include \"hlhapiutil.hpp\"
+#include \"hl_string_helpers.h\"
 ";
 
 

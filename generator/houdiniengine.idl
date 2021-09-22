@@ -222,7 +222,7 @@ interface Session {
 	// Strings
     [CObject, Internal="Houdini::getString"] String getString(int strID);
     [CObject, Internal="Houdini::setString"] int createString(String v);
-
+	[Internal="hl_cache_string_type", Static] void cacheStringType( [HString] String x);
 
 
 };

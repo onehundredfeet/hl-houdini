@@ -1,4 +1,6 @@
 #include "hlhapiutil.hpp"
+#include "hl_string_helpers.h"
+
 namespace Houdini {
 
 // 
@@ -42,21 +44,14 @@ vdynamic *GetLastCookError(HAPI_Result code,HAPI_Session* session) {
 }
 
 
-vdynamic *getString( HAPI_Session* session, HAPI_StringHandle str) {
+vstring *getString( HAPI_Session* session, HAPI_StringHandle str) {
     int buffer_length = 0;
     auto x = HAPI_GetStringBufLength( session, str, &buffer_length );
     if (x == HAPI_RESULT_SUCCESS) {
         char * buf = new char[ buffer_length ];
         if (HAPI_GetString	(	session, str, buf, buffer_length) == HAPI_RESULT_SUCCESS) {
-            uchar * ubuf = new uchar[ buffer_length ];
-            hl_from_utf8( ubuf, buffer_length, buf );
-            delete[] buf;
-
-            vdynamic *strOut = hl_alloc_strbytes(ubuf);
-
-            delete [] ubuf;
-            
-            return strOut;
+            auto *vstr = hl_utf8_to_hlstr( buf );
+            return vstr;
         }
     }
 

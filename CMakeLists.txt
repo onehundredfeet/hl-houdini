@@ -6,7 +6,7 @@ SET(library_name houdiniengine.hdll)
 add_library(${library_name} SHARED
 #Input C++ files go here
 #${HOUDINIENGINE_SRC_DIR}/INPUT FILES GO HERE.cpp
-
+src/hl_string_helpers.cpp
 src/houdiniengine.cpp
 src/hlhapiutil.cpp
 )

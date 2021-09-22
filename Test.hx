@@ -7,6 +7,8 @@ class Test {
 
 	public static function main() {
 
+        Session.cacheStringType("");
+        
         trace("New");
 
         var x = new ServerOptions();
@@ -17,13 +19,13 @@ class Test {
 
         trace("Start");
         
-        var pid = x.startSocketServer(6010);        
+        var pid = x.startSocketServer(6012);        
 
         trace ("started");
 
         var s = new Session();
         trace("Session");
-        s.connectBySocket("localhost", 6010);
+        s.connectBySocket("localhost", 6012);
 
         trace("Cook options");
         var co = new CookOptions();
