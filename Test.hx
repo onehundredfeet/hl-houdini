@@ -57,7 +57,8 @@ class Test {
         trace("outputCount: " + info.outputCount);
 
 
-        var kids = s.getChildNodeList(mn,(HAPI_NodeType.HAPI_NODETYPE_OBJ).ToInt() , (HAPI_NodeFlags.HAPI_NODEFLAGS_ANY).ToInt(), false);
+        // this paradigm needs to be changed
+        var kids = s.getChildNodeList(mn,(HAPI_NodeType.HAPI_NODETYPE_OBJ).toValue() , (HAPI_NodeFlags.HAPI_NODEFLAGS_ANY).toValue(), false);
         var kidNodes = mNode.getChildren(true);
 
         trace("kids " + kids + " | " + kidNodes.map(function(x) x.get_name()));

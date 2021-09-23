@@ -34,7 +34,7 @@ class Node {
     }
 
     public function getChildren(decendants = false) {
-        var kids = _session.getChildNodeList(_id,(Native.HAPI_NodeType.HAPI_NODETYPE_ANY).ToInt() , (Native.HAPI_NodeFlags.HAPI_NODEFLAGS_ANY).ToInt(), decendants);
+        var kids = _session.getChildNodeList(_id,(Native.HAPI_NodeType.HAPI_NODETYPE_ANY).toValue() , (Native.HAPI_NodeFlags.HAPI_NODEFLAGS_ANY).toValue(), decendants);
 
         var nodes : Array<Node> = [];
         for(i in 0...kids.length) {
